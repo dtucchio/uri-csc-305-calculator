@@ -32,6 +32,16 @@ class _CalculatorState extends State<Calculator> {
         } catch (e) {
           _result = 'Error';
         }
+      } else if (value == 'x²') {
+        try {
+          final expression = Expression.parse('($_expression) * ($_expression)');
+          const evaluator = ExpressionEvaluator();
+          final result = evaluator.eval(expression, {});
+          _expression = result.toString();
+          _result = _expression;
+        } catch (e) {
+          _result = 'Error';
+        }
       } else {
         _expression += value;
       }
@@ -93,8 +103,11 @@ class _CalculatorState extends State<Calculator> {
                   Row(
                     children: [
                       _buildButton('C', color: Colors.grey, padding: 10),
+                      const Spacer(),
                       const SizedBox(width: 8),
-                      const Spacer(flex: 3),
+                      _buildButton('%', color: Colors.orange, padding: 10),
+                      const SizedBox(width: 8),
+                      _buildButton('x²', color: Colors.orange, padding: 10),
                     ],
                   ),
                   const SizedBox(height: 10),
